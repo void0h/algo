@@ -71,3 +71,26 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
 
     return node;
 }
+
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
+    int flag = 0;
+
+    if (l1 == NULL)
+        return l2;
+    if (l2 == NULL)
+        return l1;
+
+    l1->val += l2->val;
+    if (l1->val >= 10) {
+        flag = 1;
+        l1->val %= 10;
+    }
+    l1->next = addTwoNumbers(l1->next, l2->next);
+    if (flag) {
+        struct ListNode *node = (struct ListNode *)malloc(sizeof(struct ListNode));
+        node->val = 1;
+        node->next = NULL;
+        l1->next = addTwoNumbers(l1->next, node);
+    }
+    return l1;
+}
