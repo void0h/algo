@@ -40,3 +40,23 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
     }
     return head;
 }
+
+
+/*****************************看过题解后***********************************/
+
+
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
+    static int Nth;
+    if (head == NULL) {
+        Nth = 0;
+        return head;
+    }
+    head->next = removeNthFromEnd(head->next, n);
+    Nth++;
+    if (Nth == n) {
+        struct ListNode *temp = head->next;
+        free(head);
+        return temp;
+    }
+    return head;
+}
